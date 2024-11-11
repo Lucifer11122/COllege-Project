@@ -7,7 +7,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip.tsx";
-import {
+import {  
   LogIn,
   GraduationCap,
   Users,
@@ -21,12 +21,16 @@ import { PD } from "./ui/PD.tsx";
 import {Login} from "./ui/Login.tsx";
 import Grievances from "./ui/Grievances.tsx";
 import {Undergraduate} from "./ui/Undergraduate.tsx";
+import { LoadScript, GoogleMap } from "@react-google-maps/api";
+
 export default function CollegeHomepage() {
   const [isHovered, setIsHovered] = useState(false);
   const [covidUpdate, setCovidUpdate] = useState("");
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin,] = useState(false);
   const [showGrievances, setShowGrievances] = useState(false);
   const [showUndergraduate, setShowUndergraduate] = useState(false);
+  const [admissionStatus, setAdmissionStatus] = useState("Open for applications");
+  const [displayStatus, setDisplayStatus] = useState("covid");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,10 +45,20 @@ export default function CollegeHomepage() {
     };
 
     fetchCovidUpdate();
+
+    const interval = setInterval(() => {
+      setDisplayStatus((prev) => (prev === "covid" ? "admission" : "covid"));
+    }, 2000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const handleNavigation = (path: string) => {
     navigate(path);
+  };
+
+  const handleAdmissionStatusChange = () => {
+    setAdmissionStatus("Closed for applications");
   };
 
   return (
@@ -78,7 +92,7 @@ export default function CollegeHomepage() {
                 </motion.div>
               </div>
               <motion.div
-                className="w-16 h-16 bg-orange-300 rounded-full opacity-70 absolute -bottom-16 left-0"
+                className="w-16 h-16 bg-orange-300 rounded-full opacity-70 absolute -bottom-12 left-0"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 1, delay: 0.4 }}
@@ -109,7 +123,7 @@ export default function CollegeHomepage() {
                 </motion.div>
               </div>
               <motion.div
-                className="w-16 h-16 bg-orange-300 rounded-full opacity-70 absolute -bottom-16 right-0"
+                className="w-16 h-16 bg-orange-300 rounded-full opacity-70 absolute -bottom-12 right-0"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 1, delay: 0.4 }}
@@ -142,15 +156,15 @@ export default function CollegeHomepage() {
             <p className="text-gray-600 mt-2">Established in 1944</p>
           </header>
 
-          {/* COVID-19 Banner */}
           <motion.div
-            className="w-full bg-orange-500 text-white py-2 text-center mt-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            Campus COVID19 Information: {covidUpdate}
-          </motion.div>
+  className="w-full bg-orange-500 text-white py-2 text-center mt-4"
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ delay: 0.5 }}
+>
+  {displayStatus === "covid" && covidUpdate && <span>Campus COVID-19 Status: {covidUpdate}</span>}
+  {displayStatus === "admission" && <span className="ml-4">Admissions Status: Open for applications</span>}
+</motion.div>
 
           {/* Main Image and Text Overlay */}
           <div className="relative w-full flex-grow mt-8">
@@ -188,13 +202,13 @@ export default function CollegeHomepage() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="rounded-full bg-orange-100 hover:bg-orange-200"
-                      onClick={() => setShowLogin(true)}
+                      className="rounded-full bg-orange-100 hover:bg-orange-200 transition-colors duration-200"
+                      onClick={() => handleNavigation("/login")}
                     >
                       <LogIn className="h-6 w-6 text-orange-500" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>
+                  <TooltipContent className="rounded-lg">
                     <p>Login</p>
                   </TooltipContent>
                 </Tooltip>
