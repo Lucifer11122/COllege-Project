@@ -65,7 +65,7 @@ export default function CollegeHomepage() {
     <>
       <div className="relative min-h-screen bg-white overflow-hidden">
         {/* Header background circles */}
-        <div className="absolute top-0 left-0 w-full">
+        <div className="absolute top-6 left-0 w-full">
           <div className="relative h-24 flex justify-between items-center px-4">
             {/* Left circles */}
             <div className="relative">
@@ -135,18 +135,18 @@ export default function CollegeHomepage() {
         {/* Main content */}
         <div className="relative z-10 flex flex-col items-center justify-between min-h-screen">
           {/* Header */}
-          <header className="w-full text-center pt-8">
+          <header className="w-full text-center pt-4">
             <div className="flex justify-center items-center space-x-4">
               <div className="h-px bg-orange-500 w-20" />
               <img
-                src="public/placeholder.svg"
+                src="public\logo1.jpeg"
                 alt="College Logo"
                 className="w-15 h-15"
               />
               <div className="h-px bg-orange-500 w-20" />
             </div>
             <motion.h1
-              className="text-4xl font-bold mt-4 bg-gradient-to-r from-orange-400 to-orange-600 text-transparent bg-clip-text"
+              className="text-4xl font-bold mt-2 bg-gradient-to-r from-orange-400 to-orange-600 text-transparent bg-clip-text"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -157,19 +157,19 @@ export default function CollegeHomepage() {
           </header>
 
           <motion.div
-  className="w-full bg-orange-500 text-white py-2 text-center mt-4"
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 0.5 }}
->
-  {displayStatus === "covid" && covidUpdate && <span>Campus COVID-19 Status: {covidUpdate}</span>}
-  {displayStatus === "admission" && <span className="ml-4">Admissions Status: Open for applications</span>}
-</motion.div>
+            className="w-full bg-orange-500 text-white py-2 text-center mt-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            {displayStatus === "covid" && covidUpdate && <span>Campus COVID-19 Status: {covidUpdate}</span>}
+            {displayStatus === "admission" && <span className="ml-4">Admissions Status: Open for applications</span>}
+          </motion.div>
 
           {/* Main Image and Text Overlay */}
-          <div className="relative w-full flex-grow mt-8">
+          <div className="relative w-full flex-grow mt-0">
             <img
-              src="/placeholder.svg?height=400&width=800"
+              src="public\backgroundBB.jpg?height=400&width=800"
               alt="College Building"
               className="w-full h-full object-cover"
             />
@@ -195,7 +195,7 @@ export default function CollegeHomepage() {
 
           {/* Navigation and Buttons */}
           <nav className="w-full bg-white py-4 px-8 flex justify-between items-center">
-            <div className="flex space-x-8">
+            <div className="flex space-x-4">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -213,7 +213,7 @@ export default function CollegeHomepage() {
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
-              <div></div>
+              
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -231,6 +231,7 @@ export default function CollegeHomepage() {
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
+              
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -248,6 +249,7 @@ export default function CollegeHomepage() {
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
+              
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -266,12 +268,13 @@ export default function CollegeHomepage() {
                 </Tooltip>
               </TooltipProvider>
             </div>
+            
             <div className="flex items-center space-x-4">
               <motion.div
                 className="flex items-center cursor-pointer"
                 onHoverStart={() => setIsHovered(true)}
                 onHoverEnd={() => setIsHovered(false)}
-                onClick={() => setShowGrievances(true)}
+                onClick={() => navigate('/grievances')}
               >
                 <motion.div
                   className="w-12 h-0.5 bg-orange-500"
